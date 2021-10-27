@@ -38,6 +38,15 @@
                             <h1>Create post</h1>
                                 <div class="bg-white sm:rounded-lg w-100">
                                     <div style="padding: 10px; padding-top: 0px">
+                                    @if($errors->any())
+                                        <div>
+                                            <ul>
+                                                @foreach($errors->all() as $error)
+                                                <li>{{$error}}</li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                    @endif
                                         <form action="{{ route('post.store') }}" method="post">
                                         @csrf
                                             <div class="w-100" style="width: 345px;">

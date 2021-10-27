@@ -15,11 +15,27 @@
             .bg-green{
                 background-color: green;
             }
+            .bg-red{
+                background-color: red;
+            }
+            .bg-gray{
+                background-color: gray;
+            }
             .bg-green:hover{
                 background-color: #006800;
             }
             .ml-1{
                 margin-left: 10px;
+            }
+            .hidden{
+                display: none;
+            }
+            form input{
+                border: 2px solid black;
+            }
+            form button{
+                background: none;
+                width: 100%;
             }
         </style>
 
@@ -44,20 +60,50 @@
                 <div class="mt-8 bg-white dark:bg-gray-800 overflow-hidden shadow sm:rounded-lg">
                     <div class="grid grid-cols-1 md:grid-cols-12">
                         <div class="p-6">
-                            <h1>Feed</h1>
-                            @foreach($posts as $post)
-                                <a href="{{route('post.show', $post->id)}}">
-                                    <div class="bg-white sm:rounded-lg p-1 w-100">
-                                        <div class="px-1">
-                                            <h2>{{$post->title}}</h2>
-                                            <p>{{$post->description}}</p>
+                            <h1>Post ID: {{$post->id}}</h1>
+                                <div class="bg-white sm:rounded-lg p-1 w-100">
+                                    <div class="px-1">
+                                        <h2>{{$post->title}}</h2>
+                                        <p>{{$post->description}}</p>
+                                        @if($errors->any())
+                                        <div>
+                                            <ul>
+                                                @foreach($errors->all() as $error)
+                                                <li>{{$error}}</li>
+                                                @endforeach
+                                            </ul>
                                         </div>
+                                        @endif
+                                        <form action="{{ route('post.edit', $post->id) }}" id="edit-form" class="hidden">
+                                            @csrf
+                                            {{ method_field('PUT') }}
+                                            <label for="title">Title</label>
+                                            <input type="text" name="title" id="title" value="{{old('title')}}">
+                                            <label for="description">Description</label>
+                                            <input type="text" name="description" value="{{old('description')}}">
+                                            <input type="submit" value="submit">
+                                            <a onclick="document.getElementById('edit-form').classList = 'hidden'" style="border: 1px solid black; padding: 2px; background-color: red;">X</a>
+                                        </form>
                                     </div>
-                                </a>
-                            @endforeach
-                            <a href="{{ route('post.create') }}">
+                                </div>
+                            <a onclick="document.getElementById('edit-form').classList = ''">
                                 <div class="bg-green sm:rounded-lg">
-                                    <h2 class="ml-1">Create post</h2>
+                                    <h2 class="ml-1">edit</h2>
+                                </div>
+                            </a>
+                            <form action="{{ route('post.delete', $post->id) }}" id="delete-form" method="post">
+                                @csrf
+                                {{ method_field('DELETE') }}
+                                <div class="bg-red sm:rounded-lg">
+                                    <button type="submit">
+                                        <h2 class="ml-1">delete</h2>
+                                    </button> 
+                                </div>
+                            </form>
+                            
+                            <a href="{{ route('posts') }}">
+                                <div class="bg-gray sm:rounded-lg">
+                                    <h2 class="ml-1">go back</h2>
                                 </div>
                             </a>
                         </div>
