@@ -5,7 +5,11 @@ namespace App\Http\Controllers\Feed;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreUpdatePost;
 use App\Http\Controllers\Controller;
-use App\Models\Post;
+use Illuminate\Support\Facades\Auth;
+use App\Models\{
+    Post,
+    User
+};
 
 class PostController extends Controller
 {
@@ -13,17 +17,22 @@ class PostController extends Controller
     {
         $posts = Post::get();
 
+        foreach ($posts as $post) {
+            $post->user_name = User::find($post->user_id)->name;
+        }
+
         return view('feed.index', compact('posts'));
     }
     public function create()
     {
         return view('feed.create');
-    }
+}
     public function store(StoreUpdatePost $request)
     {
         Post::create([
             'title' => $request->title,
             'description' => $request->description,
+            'user_id' => Auth::user()->id
         ]);
 
         return redirect()->route('posts');
@@ -33,6 +42,8 @@ class PostController extends Controller
         if(!$post = Post::find($id)){
             return redirect()->back();
         }
+
+        $post->user_name = User::find($post->user_id)->name;
 
         return view('feed.show', compact('post'));
     }
