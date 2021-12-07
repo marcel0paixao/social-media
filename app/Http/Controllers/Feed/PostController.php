@@ -20,8 +20,9 @@ class PostController extends Controller
         foreach ($posts as $post) {
             $post->user_name = User::find($post->user_id)->name;
         }
+        $user = Auth::user();
 
-        return view('feed.index', compact('posts'));
+        return view('feed.index', compact('posts', 'user'));
     }
     public function create()
     {
@@ -44,12 +45,16 @@ class PostController extends Controller
         }
 
         $post->user_name = User::find($post->user_id)->name;
+        $user = Auth::user();
 
-        return view('feed.show', compact('post'));
+        return view('feed.show', compact('post', 'user'));
     }
     public function edit(StoreUpdatePost $request, $id)
     { 
         if(!$post = Post::find($id)){
+            return redirect()->back();
+        }
+        if ($post->user_id != Auth::user()->id) {
             return redirect()->back();
         }
 

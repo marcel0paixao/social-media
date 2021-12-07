@@ -1,23 +1,14 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <title>Social media | feed</title>
-
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
-        
-    </head>
-    <body>
-    
-</html>
 <x-app-layout>
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
+                    <div class="w-100 border-b-2 h-8 border-gray-400">
+                        <a href="{{ route('posts') }}">
+                            <i class="fas fa-chevron-left fa-lg inline-block"></i>
+                            <span class="mb-2">Go back</span>
+                        </a>
+                    </div>
                     <div>
                         <h1 class="text-3xl m-6">Create a post</h1>
                         <div>
