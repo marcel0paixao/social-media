@@ -20,7 +20,7 @@
             @if (Route::has('login'))
                 <div>
                     @auth
-                        <a href="{{ url('/posts') }}">Posts</a>
+                        <a href="{{ url('/posts') }}">Feed</a>
                     @else
                         <a href="{{ route('login') }}">Log in</a>
 
