@@ -1,3 +1,9 @@
+<!-- Scripts -->
+<script src="{{ asset('js/posts.js') }}" defer></script>
+
+<!-- Styles -->
+<link rel="stylesheet" href="{{ asset('css/posts.css') }}"/>
+
 <x-app-layout>
     <div class="py-12">
         <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">

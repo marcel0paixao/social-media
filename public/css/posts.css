@@ -1,0 +1,49 @@
+#trigger-button{
+    width: 30px; 
+    height: 30px; 
+    padding-left: 38%; 
+    padding-top: 25%; 
+    border-radius: 100%;
+}
+#trigger-button:hover{
+    background-color: rgb(100, 100, 100); 
+    transition: 0.5s;
+}
+
+#trigger-button:hover i{
+    color: #fff; 
+    transition: 0.5s;
+}
+
+.dropdown-post-menu{
+    width: max-content;
+    height: max-content;
+    background-color: rgb(228, 228, 228);
+    border-radius: 5px;
+    padding: 10px 10px;
+}
+.dropdown-post-menu li:first-child{
+    margin-top: 0px;
+}
+.dropdown-post-menu li:last-child{
+    margin-bottom: 0px;
+}
+.dropdown-menu-option:hover{
+    background-color: white;
+}
+.dropdown-menu-option{
+    border-radius: 5px;
+    padding: 5px;
+    justify-content: space-between;
+}
+.dropdown-menu-option form{
+    margin: 0px;
+}
+.card>div{
+    min-width: 100%;
+    max-width: 100%;
+    word-wrap: break-word;
+}
+.card-content{
+    max-width: 549px;
+}

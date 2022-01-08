@@ -10,10 +10,10 @@
         </a>
     </div>
 @endif
-<div class="flex bg-white @if(!$showPost) cursor-pointer shadow-lg hover:bg-gray-100 @endif rounded-lg md:mx-4 my-4 md:mx-auto max-w-md max-w-2xl" @if(!$showPost) onClick="window.location.href= '{{ route('post.show', $post->id) }}'" @endif id="card"><!--horizantil margin is just for display-->
+<div class="card flex bg-white @if(!$showPost) cursor-pointer shadow-lg hover:bg-gray-100 @endif rounded-lg md:mx-4 my-4 md:mx-auto max-w-md max-w-2xl" @if(!$showPost) onClick="postDetails('{{ route('post.show', $post->id) }}')" @endif id="card{{$post->id}}"><!--horizantil margin is just for display-->
     <div class="flex items-start px-4 py-4">
         <img class="w-12 h-12 rounded-full object-cover mr-4 shadow" src="https://images.unsplash.com/photo-1542156822-6924d1a71ace?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" alt="avatar">
-        <div class="">
+        <div class="w-full max-w-fit card-content">
             @if($showPost && $errors->any())
                 <div>
                     <ul>
@@ -30,29 +30,30 @@
                 
                 @if($post->user_id == $user->id)
                 <div class="hidden sm:flex sm:items-center ml-auto">
-                    <x-dropdown align="right" width="48"> 
-                        <x-slot name="trigger">
-                            <button class="flex items-center text-sm font-medium text-gray-500 hover:text-black hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
-                                <i class="fas fa-ellipsis-v fa-lg cursor-pointer" onClick="document.getElementById('card').onClick = ''"></i>
+                    <div> 
+                        <div id="trigger-button" onClick="editPost(event, {{ $post->id }})">
+                            <button class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-100 hover:border-white focus:outline-none focus:text-white focus:border-white transition duration-150 ease-in-out">
+                                <i class="fas fa-ellipsis-v fa-lg cursor-pointer"></i>
                             </button>
-                        </x-slot>
+                        </div>
 
-                        <x-slot name="content">
-                            <x-dropdown-link class="cursor-pointer" onclick="event.preventDefault()
-                                    document.getElementById('edit-form').classList = ''">
-                                <i class="fas fa-edit"></i> {{ __('Edit') }}
-                            </x-dropdown-link>
-                            <form method="POST" action="{{ route('post.delete', $post->id) }}" id="delete-form">
-                            @csrf
-                            {{ method_field('DELETE') }}
-                                <x-dropdown-link :href="route('post.delete', $post->id)"
-                                        onclick="event.preventDefault();
-                                                    this.closest('form').submit();">
-                                    <i class="fas fa-trash-alt text-red-500"></i> {{ __('Delete') }}
-                                </x-dropdown-link>
-                            </form>
-                        </x-slot>
-                    </x-dropdown>
+                        <ul class="dropdown-post-menu hidden absolute" id="dropdown-post-menu-{{ $post->id }}">
+                            <li>
+                                <div class="dropdown-menu-option">
+                                    <a href="" class="cursor-pointer"><i class="fas fa-edit mr-2"></i>Edit</a>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="dropdown-menu-option">
+                                    <form method="POST" action="{{ route('post.delete', $post->id) }}" id="delete-form">
+                                    @csrf
+                                    {{ method_field('DELETE') }}
+                                        <button type="submit"><i class="fas fa-trash-alt text-red-500 mr-3"></i>Delete</button>
+                                    </form>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
                 @endif
                 
